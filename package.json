@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "build-test": "yarn build && yarn test-without-coverage",
+    "start": "concurrently 'yarn prettier-watch' 'yarn watch'",
+    "watch": "onchange '*.{ts,json}' -- yarn test-without-coverage",
+    "test": "jest --coverage --coverageReporters=text-lcov | coveralls",
+    "test-without-reporting": "jest --coverage",
+    "test-without-coverage": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.3"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
+  }
+}

@@ -38,10 +38,14 @@ export default (filter: string) => {
       };
       const condition = conditions[i[1]];
       if (!condition) return;
+      let value: string | Date = i[2].trim();
+      try {
+        value = isNaN(new Date(value).getTime()) ? value : new Date(value);
+      } catch (error) {}
       return {
         key: i[0].trim(),
         condition,
-        value: i[2].trim()
+        value
       } as filterResult;
     })
     .filter(i => !!i);

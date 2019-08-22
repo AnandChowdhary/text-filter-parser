@@ -1,4 +1,5 @@
 {
+  "name": "text-filter-parser",
   "version": "1.0.0",
   "main": "dist/index.js",
   "files": [

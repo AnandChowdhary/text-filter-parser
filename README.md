@@ -26,7 +26,7 @@ For example, `hello=world` becomes:
 A more complicated example:
 
 ```
-first_name = Anand, last_name *= Ch, joined >= 2019-02-12
+first_name = Anand, last_name sw Ch, joined >= 2019-02-12
 ```
 
 ```json
@@ -66,7 +66,7 @@ const parse = require("text-filter-parser");
 Initialize it with the directory of your database:
 
 ```js
-const result = parse("id > 2, name =* 'A").toJSON();
+const result = parse("id > 2, name ew 'A").toJSON();
 /*
 [
   {

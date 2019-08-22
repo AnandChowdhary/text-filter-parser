@@ -53,5 +53,5 @@ test("get SQL from a single rule filter", () => {
 });
 
 test("get SQL from a a filter with all rules", () => {
-  expect(new Parser("first_name = Anand, id != 2, last_name *= C, id < 6, activated > 0, email *=* @, year >= 2019, month <= 2, food =* a").toSQL()).toBe('`first_name` = "Anand" AND `id` != "2" AND `last_name` = "C%" AND `id` < 6 AND `activated` > 0 AND `email` = "%@%" AND `year` >= 2019 AND `month` <= 2 AND `food` = "%a"');
+  expect(new Parser("first_name = Anand, id != 2, last_name sw C, id < 6, activated > 0, email * @, year >= 2019, month <= 2, food ew a").toSQL()).toBe('`first_name` = "Anand" AND `id` != "2" AND `last_name` = "C%" AND `id` < 6 AND `activated` > 0 AND `email` = "%@%" AND `year` >= 2019 AND `month` <= 2 AND `food` = "%a"');
 });

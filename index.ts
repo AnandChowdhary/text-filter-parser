@@ -32,9 +32,9 @@ export default class TextFilterParser {
           "<": "is less than",
           ">=": "is greater than or equal to",
           "<=": "is less than or equal to",
-          "*=": "starts with",
-          "=*": "ends with",
-          "*=*": "includes"
+          "sw": "starts with",
+          "ew": "ends with",
+          "*": "includes"
         } as {
           [index: string]: Conditions;
         };

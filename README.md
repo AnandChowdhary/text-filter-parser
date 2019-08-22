@@ -11,7 +11,7 @@ A utility to parse query filter rules given in plain text and get a structured a
 
 ## ⭐ How it works
 
-For example, `hello=world` becomes:
+If you have a database view in your app, you might want to give users the option to filter based on a text input. For example, `hello=world` becomes:
 
 ```json
 [
@@ -23,31 +23,7 @@ For example, `hello=world` becomes:
 ]
 ```
 
-A more complicated example:
-
-```
-first_name = Anand, last_name sw Ch, joined >= 2019-02-12
-```
-
-```json
-[
-  {
-    "key": "first_name",
-    "condition": "is",
-    "value": "Anand"
-  },
-  {
-    "key": "last_name",
-    "condition": "starts with",
-    "value": "Ch"
-  },
-  {
-    "key": "joined",
-    "condition": "is greater than or equal to",
-    "value": "Tue Feb 12 2019 05:30:00 GMT+0530 (India Standard Time)"
-  }
-]
-```
+You can then translate this into a query or use one of built-in functions like `toSQL()`.
 
 ## 💻 Usage
 
@@ -60,13 +36,15 @@ npm install text-filter-parser
 Add it to your project:
 
 ```js
-const parse = require("text-filter-parser");
+const Parser = require("text-filter-parser");
 ```
 
-Initialize it with the directory of your database:
+Create an object and use a method to get your desired output.
 
 ```js
-const result = parse("id > 2, name ew 'A").toJSON();
+const result = new Parser("id > 2, name ew nand")
+const json = result.toJSON();
+console.log(json);
 /*
 [
   {
@@ -76,12 +54,37 @@ const result = parse("id > 2, name ew 'A").toJSON();
   },
   {
     key": "name",
-    condition": "starts with",
-    value: "A"
+    condition": "ends with",
+    value: "nand"
   }
 ]
 */
 ```
+
+You can also generate the `WHERE` clause of an SQL query:
+
+```js
+const result = new Parser("id > 2, name ew nand")
+const sql = result.toSQL();
+console.log("SELECT * FROM users WHERE " + sql);
+/*
+SELECT * FROM users WHERE `id` > 2 AND `name` = "%nand"
+*/
+```
+
+### Operators
+
+| Operator | Condition |
+| -------- | --------- |
+| = | `"is"` |
+| != | `"is not"` |
+| > | `"is greater than"` |
+| < | `"is less than"` |
+| >= | `"is greater than or equal to"` |
+| <= | `"is less than or equal to"` |
+| sw | `"starts with"` |
+| ew | `"ends with"` |
+| * | `"includes"` |
 
 ## 📝 License
 
